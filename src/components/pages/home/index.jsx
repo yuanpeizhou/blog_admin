@@ -1,14 +1,12 @@
 import React from "react";
 // import Router from './router';\
 
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import Sidebar from '../../Sidebar/index';
-import BreadcrumbComponent from '../../Breadcrumb/index'
 import Router from '../../../router';
 
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
 
 
@@ -35,7 +33,6 @@ class Home extends React.Component {
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
               Bill is a cat.
             </div> */}
-            <BreadcrumbComponent path='test/123'/>
             <Router /> 
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

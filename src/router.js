@@ -7,6 +7,7 @@ import {
 
 
 import Welcome from '../src/components/pages/Welcome/index';
+import Article from '../src/components/pages/Article/index'
 
 // Each logical "route" has two components, one for
 // the sidebar and one for the main area. We want to
@@ -22,6 +23,10 @@ const routes = [
 	  path: "/welcome",
 	  component: Welcome
 	},
+	{
+		path: "/article/list",
+		component: Article
+	  },
 	// {
 	//   path: "/tacos",
 	//   component: Tacos,

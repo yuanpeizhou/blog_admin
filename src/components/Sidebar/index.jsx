@@ -1,7 +1,8 @@
 import React from 'react';
 
 
-import { Menu, Switch } from 'antd';
+import { Menu } from 'antd';
+import { Link } from "react-router-dom";
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 // import {
 //   AppstoreOutlined,
@@ -40,7 +41,9 @@ export default class Sidebar extends React.Component {
     this.setState({
       current: e.key,
     });
+
   };
+
 
   render() {
     return  <>

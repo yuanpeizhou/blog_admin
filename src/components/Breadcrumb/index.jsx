@@ -1,18 +1,26 @@
 import React from 'react';
-import { Menu, Breadcrumb } from 'antd';
+import { Breadcrumb } from 'antd';
 
 export default class BreadcrumbComponent extends React.Component {
   constructor(props) {
 		super(props);
-		
-		console.log(props.path)
+    var lists = []
+
+    if(props.path){
+      lists = props.path.split('/')
+    }
+    this.state = {
+      lists : lists,
+      test : '123'
+    }
   }
 
   render() {
     return  <>
       <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>User</Breadcrumb.Item>
-          <Breadcrumb.Item>Bill</Breadcrumb.Item>
+        {this.state.lists.map( (item,index) => {
+          return <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>
+        })}
       </Breadcrumb>
     </>
   }
