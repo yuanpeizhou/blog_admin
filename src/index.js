@@ -1,15 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import Home from './components/pages/home/index'
+import { BrowserRouter } from "react-router-dom";
+
+// import App from './App';
+// import { Provider } from 'react-redux'
+// import { createStore } from 'redux'
+// import todoApp from './reducers'
+// import App from './components/App'
+
+// let store = createStore(todoApp)
 
 ReactDOM.render(
-  <Home />,
+  <BrowserRouter>
+    <Home />
+  </BrowserRouter>,
+
   document.getElementById('root')
 );
+
+// <Provider store={store}>
+//   <App />
+// </Provider>,
 
 
 

@@ -1,13 +1,15 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
+  Link
 } from "react-router-dom";
 
 
 import Welcome from '../src/components/pages/Welcome/index';
-import Article from '../src/components/pages/Article/index'
+import ArticleList from '../src/components/pages/Article/index'
+import ArticleEdit from '../src/components/pages/Article/edit'
+import BookList from '../src/components/pages/Book/list'
 
 // Each logical "route" has two components, one for
 // the sidebar and one for the main area. We want to
@@ -18,49 +20,67 @@ import Article from '../src/components/pages/Article/index'
 // spots: once for the sidebar and once in the main
 // content section. All routes are in the same
 // order they would appear in a <Switch>.
-const routes = [
-	{
-	  path: "/welcome",
-	  component: Welcome
-	},
-	{
-		path: "/article/list",
-		component: Article
-	  },
-	// {
-	//   path: "/tacos",
-	//   component: Tacos,
-	//   routes: [
-	// 	{
-	// 	  path: "/tacos/bus",
-	// 	  component: Bus
-	// 	},
-	// 	{
-	// 	  path: "/tacos/cart",
-	// 	  component: Cart
-	// 	}
-	//   ]
-	// }
-];
+// const routes = [
+
+// 	{
+// 	  path: "/welcome",
+// 	  component: Welcome
+// 	},
+// 	{
+// 		path: "/article",
+// 		component: ArticleList,
+// 		// routes: [
+// 		// 	{
+// 		// 		path: "/article/insert",
+// 		// 		component: ArticleEdit,
+// 		// 	},
+// 		// 	{
+// 		// 		path: "/article/update",
+// 		// 		component: Bus,
+// 		// 	}
+// 		// ]
+// 	},
+// 	{
+// 		path: "/book/list",
+// 		component : BookList
+// 	},
+// 	// {
+// 	// 	path: "/",
+// 	// 	component:Welcome
+// 	// }
+// ];
+
   
-  export default function RouteConfigExample() {
+export default function RouteConfigExample() {
 	return (
-	  <Router>
 		<div>
 		  <Switch>
-			{routes.map((route, i) => (
-			  <RouteWithSubRoutes key={i} {...route} />
-			))}
+			<Route exact path="/">
+					<ArticleEdit />
+			</Route>
+			<Route  path="/welcome">
+					<Welcome />
+			</Route>
+			<Route  path="/article">
+					<ArticleList />
+			</Route>
+			<Route  path="/test" component={ArticleEdit} />
+					{/* <ArticleEdit /> */}
+			{/* <Route path="/article" component={ArticleList}></Route>
+			<Route path="/article/insert" component={ArticleEdit}></Route> */}
 		  </Switch>
 		</div>
-	  </Router>
 	);
   }
+
+  			{/* {routes.map((route, i) => (
+			  <RouteWithSubRoutes key={i} {...route} />
+			))} */}
   
-  // A special wrapper for <Route> that knows how to
-  // handle "sub"-routes by passing them in a `routes`
-  // prop to the component it renders.
-  function RouteWithSubRoutes(route) {
+// A special wrapper for <Route> that knows how to
+// handle "sub"-routes by passing them in a `routes`
+// prop to the component it renders.
+function RouteWithSubRoutes(route) {
 	return (
 	  <Route
 		path={route.path}
@@ -71,6 +91,3 @@ const routes = [
 	  />
 	);
   }
-  
-  
-

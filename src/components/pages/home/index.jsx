@@ -1,14 +1,12 @@
 import React from "react";
-// import Router from './router';\
 
 import { Layout } from 'antd';
-import 'antd/dist/antd.css';
 import Sidebar from '../../Sidebar/index';
 import Router from '../../../router';
+import 'antd/dist/antd.css';
+
 
 const { Header, Content, Footer, Sider } = Layout;
-
-
 
 class Home extends React.Component {
   state = {
@@ -19,6 +17,21 @@ class Home extends React.Component {
     console.log(collapsed);
     this.setState({ collapsed });
   };
+  componentDidMount(){
+    // console.log('加载了')
+    // console.log(addNameCreater('ceshi'))
+    // axios.get('http://192.168.6.19/blog_server/public/api/article/list', {
+    //   params: {
+    //     // ID: 12345
+    //   }
+    // })
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+  }
   render() {
     return (
       <Layout style={{ minHeight: '100vh' }}>
@@ -27,18 +40,15 @@ class Home extends React.Component {
           <Sidebar/>
         </Sider>
         <Layout className="site-layout">
-          {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
           <Content style={{ margin: '0 16px' }}>
-            {/* <BreadcrumbComponent path='test/123'/>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-              Bill is a cat.
-            </div> */}
             <Router /> 
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>
       </Layout>
     );
+
+    {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
   }
 };
 

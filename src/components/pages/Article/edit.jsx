@@ -1,10 +1,10 @@
 import React from "react";
 
-export default class Article extends React.Component {
+export default class ArticleEdit extends React.Component {
 
   render() {
     return (
-        <h1>hello world!!</h1>
+        <h1>hello edit!!</h1>
     );
   }
 };
