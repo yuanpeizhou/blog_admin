@@ -20,56 +20,44 @@ import BookList from '../src/components/pages/Book/list'
 // spots: once for the sidebar and once in the main
 // content section. All routes are in the same
 // order they would appear in a <Switch>.
-// const routes = [
-
-// 	{
-// 	  path: "/welcome",
-// 	  component: Welcome
-// 	},
-// 	{
-// 		path: "/article",
-// 		component: ArticleList,
-// 		// routes: [
-// 		// 	{
-// 		// 		path: "/article/insert",
-// 		// 		component: ArticleEdit,
-// 		// 	},
-// 		// 	{
-// 		// 		path: "/article/update",
-// 		// 		component: Bus,
-// 		// 	}
-// 		// ]
-// 	},
-// 	{
-// 		path: "/book/list",
-// 		component : BookList
-// 	},
-// 	// {
-// 	// 	path: "/",
-// 	// 	component:Welcome
-// 	// }
-// ];
+const routes = [
+	{
+		path: "/",
+		component:Welcome
+	},
+	{
+	  path: "/welcome",
+	  component: Welcome
+	},
+	{
+		path: "/article",
+		component: ArticleList,
+		routes: [
+			{
+				path: "/article/insert",
+				component: ArticleEdit,
+			},
+			{
+				path: "/article/update",
+				component: ArticleEdit,
+			}
+		]
+	},
+	{
+		path: "/book/list",
+		component : BookList
+	}
+];
 
   
 export default function RouteConfigExample() {
 	return (
-		<div>
-		  <Switch>
-			<Route exact path="/">
-					<ArticleEdit />
-			</Route>
-			<Route  path="/welcome">
-					<Welcome />
-			</Route>
-			<Route  path="/article">
-					<ArticleList />
-			</Route>
-			<Route  path="/test" component={ArticleEdit} />
-					{/* <ArticleEdit /> */}
-			{/* <Route path="/article" component={ArticleList}></Route>
-			<Route path="/article/insert" component={ArticleEdit}></Route> */}
-		  </Switch>
-		</div>
+		<Switch>
+			{routes.forEach((item,index) => {
+				<Route  exact path={item.path} component={item.component} />
+			})}
+		</Switch>
+
 	);
   }
 
@@ -77,17 +65,22 @@ export default function RouteConfigExample() {
 			  <RouteWithSubRoutes key={i} {...route} />
 			))} */}
   
-// A special wrapper for <Route> that knows how to
-// handle "sub"-routes by passing them in a `routes`
-// prop to the component it renders.
-function RouteWithSubRoutes(route) {
-	return (
-	  <Route
-		path={route.path}
-		render={props => (
-		  // pass the sub-routes down to keep nesting
-		  <route.component {...props} routes={route.routes} />
-		)}
-	  />
-	);
-  }
+
+// function RouteWithSubRoutes(props) {
+
+
+// 	return(
+// 		<Switch>
+// 		{
+// 			props.test.forEach((item,index) => {
+// 				var timestamp = Date.parse(new Date());
+// 				{<Route key={timestamp + index} exact path={item.path} component={item.component} />}
+// 				if(item.routes){
+// 					{<RouteWithSubRoutes test = {item.routes} />}
+// 				}
+// 			})
+// 		}
+// 	</Switch>
+// 	)
+
+// }
