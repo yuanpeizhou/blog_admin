@@ -1,11 +1,11 @@
 
 import axios from 'axios'
 
-const api_host = 'http://192.168.6.19/blog_server/public/api/'
+const api_host_local = 'http://127.0.0.1/book_spider/public/'
 
 
 function httpRequest(url,method = 'get',params,charset,callback){
-  const apiUrl = api_host + url
+  const apiUrl = api_host_local + url
 
   if(method === 'get'){
       axios.get(apiUrl, {
@@ -13,7 +13,7 @@ function httpRequest(url,method = 'get',params,charset,callback){
       })
       .then(function (response) {
         console.log(response);
-        callback(response)
+        callback(response.data.data)
       })
       .catch(function (error) {
         console.log(error);

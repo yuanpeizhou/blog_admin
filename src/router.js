@@ -30,7 +30,7 @@ const routes = [
 	  component: Welcome
 	},
 	{
-		path: "/article",
+		path: "/article/list",
 		component: ArticleList,
 		routes: [
 			{
@@ -49,38 +49,26 @@ const routes = [
 	}
 ];
 
-  
+/**渲染路由组件 */
 export default function RouteConfigExample() {
 	return (
 		<Switch>
-			{routes.forEach((item,index) => {
-				<Route  exact path={item.path} component={item.component} />
-			})}
+			{RouteWithSubRoutes(routes)}
 		</Switch>
-
 	);
-  }
+}
 
-  			{/* {routes.map((route, i) => (
-			  <RouteWithSubRoutes key={i} {...route} />
-			))} */}
-  
+/**
+ * 递归生成路由结构
+ * @param {路由树} routes 
+ */
+function RouteWithSubRoutes(routes) {
+	return routes.map((item, index) => {
+		if(item.routes){
+			return RouteWithSubRoutes(item.routes)
+		}
+		return <Route key={Date.parse(new Date()) + index}  exact path={item.path} component={item.component} />
+	})
+}
 
-// function RouteWithSubRoutes(props) {
 
-
-// 	return(
-// 		<Switch>
-// 		{
-// 			props.test.forEach((item,index) => {
-// 				var timestamp = Date.parse(new Date());
-// 				{<Route key={timestamp + index} exact path={item.path} component={item.component} />}
-// 				if(item.routes){
-// 					{<RouteWithSubRoutes test = {item.routes} />}
-// 				}
-// 			})
-// 		}
-// 	</Switch>
-// 	)
-
-// }

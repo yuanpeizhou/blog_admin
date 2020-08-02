@@ -6,67 +6,45 @@ import ActionButton from '../../ActionButton/index'
 import getArticleList from '../../../api';
 
 
-
-
-// const data = [
-//   {
-//     key: '1',
-//     id: '1',
-//     name: 'John Brown',
-//     money: '￥300,000.00',
-//     address: 'New York No. 1 Lake Park',
-//   },
-//   {
-//     key: '2',
-//     id: '2',
-//     name: 'Jim Green',
-//     money: '￥1,256,000.00',
-//     address: 'London No. 1 Lake Park',
-//   },
-//   {
-//     key: '3',
-//     id: '3',
-//     name: 'Joe Black',
-//     money: '￥120,000.00',
-//     address: 'Sidney No. 1 Lake Park',
-//   },
-// ];
-
 export default class BookList extends React.Component {
   constructor(props) {
-    
-
-    // this.state = {
-    //     tableData : []
-    // }
 
     super(props);
 
-    // this.columns = [
-    //   {
-    //     title: '文章标题',
-    //     dataIndex: 'name',
-    //     width: 200,
-    //     align:'center',
-    //     render: text => <a>{text}</a>,
-    //   },
-    //   {
-    //     title: 'Cash Assets',
-    //     className: 'column-money',
-    //     dataIndex: 'money',
-    //     align: 'center',
-    //   },
-    //   {
-    //     title: 'Address',
-    //     dataIndex: 'address',
-    //   },
-    //   {
-    //     title: '操作',
-    //     dataIndex: 'address',
-    //     align: 'center',
-    //     render: (text, record, index) => <ActionButton editClick={this.handleEdit} deleteClick={this.handleDelete} value={record}/>
-    //   },
-    // ];
+    this.state = {tableData: []};
+
+    this.columns = [
+      {
+        title: '书名',
+        dataIndex: 'book_name',
+        width: 400,
+        align:'center',
+        render: text => <a>{text}</a>,
+      },
+      {
+        title: '作者',
+        dataIndex: 'author_name',
+        width: 300,
+        align:'center',
+      },
+      {
+        title: '链接',
+        // className: 'column-money',
+        dataIndex: 'url',
+        align: 'center',
+      },
+      // {
+      //   title: 'Address',
+      //   dataIndex: 'address',
+      // },
+      {
+        title: '操作',
+        dataIndex: 'address',
+        width: 200,
+        align: 'center',
+        render: (text, record, index) => <ActionButton editClick={this.handleEdit} deleteClick={this.handleDelete} value={record}/>
+      },
+    ];
     console.log('初始化')
     this.loadData = this.loadData.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -78,8 +56,20 @@ export default class BookList extends React.Component {
   }
   /*加载数据*/
   loadData(){
-    getArticleList('book/list','get',null,function($res){
-        console.log($res)
+    const _this = this 
+    getArticleList('api/book/list','get',null,function(res){
+        // console.log('返回',res)
+        const data = res.data.map((item , index) => {
+          var temp = []
+          temp['key'] = item.id
+          temp['book_name'] = item.book_name
+          temp['author_name'] = item.author_name
+          temp['url'] = item.url
+          return temp
+        })
+        _this.setState({
+          tableData : data
+        });
     })
   }
   /*编辑数据*/
@@ -96,15 +86,15 @@ export default class BookList extends React.Component {
   render() {
     return (
       <>
-        <BreadcrumbComponent path='文章管理/文章列表'/>
+        <BreadcrumbComponent path='书籍管理/书籍列表'/>
         
-        {/* <Table
+        <Table
           columns={this.columns}
-          dataSource={data}
+          dataSource={this.state.tableData}
           bordered
           // title={() => 'Header'}
           // footer={() => 'Footer'}
-        /> */}
+        />
       </>
     );
   }
