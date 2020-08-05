@@ -1,8 +1,36 @@
+.info_button{
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 4px !important;
+}
+
 .edit_button{
-    margin-right: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
     border-radius: 4px !important;
 }
 
 .delete_button{
+    margin-left: 5px;
+    margin-right: 5px;
     border-radius: 4px !important;
+}
+
+.export_button{
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 4px !important;
+}
+
+.handle_button{
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 4px !important;
+}
+
+.chapter_content_return{
+    position: fixed !important;
+
+    bottom: 50%;
+    right: 10%;
 }

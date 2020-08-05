@@ -1,16 +1,13 @@
 import React from "react";
-import { Table, Input , Row , Col , Button ,Form} from 'antd';
+import { Table, Input , Row , Button ,Form} from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
 import ActionButton from '../../ActionButton/index'
 
-import {getArticleList,handleBook,handleBookExport} from '../../../api';
+import {getArticleList,handleChapter} from '../../../api';
 
-import { withRouter } from "react-router";
-
-
-class BookList extends React.Component {
+export default class BookInfo extends React.Component {
   formRef = React.createRef();
-
+  
   constructor(props) {
     super(props);
 
@@ -27,73 +24,39 @@ class BookList extends React.Component {
         onChange: (current) => this.changePage(current),
       },
       searchData: {
-        book_name : '',
-        author_name : ''
-      }
+        keyword : '',
+      },
+      tableDispLay : true,
+      txt_content : ''
     };
 
     this.columns = [
       {
-        title: 'id',
+        title: '序号',
         dataIndex: 'key',
-        width: 30,
-        align:'center',
-      },
-      {
-        title: '书名',
-        dataIndex: 'book_name',
-        width: 250,
-        align:'center',
-        render: text => <a>{text}</a>,
-      },
-      {
-        title: '作者',
-        dataIndex: 'author_name',
-        width: 150,
-        align:'center',
-      },
-      {
-        title: '章节总数量',
-        dataIndex: 'chapter_num',
-        width: 110,
-        align:'center',
-      },
-      {
-        title: '爬取章节数',
-        dataIndex: 'current_page',
-        width: 110,
-        align:'center',
-      },
-      {
-        title: '上次更新日期',
-        dataIndex: 'last_update_date',
-        width: 130,
-        align:'center',
-      },
-      {
-        title: '上次扫描日期',
-        dataIndex: 'last_scan_date',
-        width: 130,
-        align:'center',
-      },
-      {
-        title: '字数',
-        dataIndex: 'words',
         width: 50,
         align:'center',
       },
       {
-        title: '链接',
-        dataIndex: 'url',
+        title: '过滤文本',
+        dataIndex: 'content',
+        width: 500,
+        align:'center',
+        render: text => <p style={{cursor: 'pointer'}} onClick={this.contentClick.bind(this,text)} >{text ? text.slice(1,300) : ''}</p>,
+      },
+      {
+        title: '原数据',
+        dataIndex: 'source_content',
+        width: 500,
         align: 'center',
-      render: text => <a target="_blank" href={text}>{text}</a>,
+        render: text => <p style={{cursor: 'pointer'}} onClick={this.sourceContentClick.bind(this,text)} >{text ? text.slice(1,300) : ''}</p>,
       },
       {
         title: '操作',
         dataIndex: 'address',
-        width: 400,
+        width: 200,
         align: 'center',
-        render: (text, record, index) => <ActionButton infoClick={this.handleInfo.bind(this)} handleClick={this.handleBook.bind(this,record)} exportClick={this.handleExport.bind(this,record)}  value={record}/>
+        render: (text, record, index) => <ActionButton handleClick={this.handleChapter.bind(this,record)} editClick={this.handleEdit} deleteClick={this.handleDelete} value={record}/>
       },
     ];
 
@@ -152,27 +115,20 @@ class BookList extends React.Component {
   /*加载数据*/
   loadData(isInit = true){
     const _this = this 
-
     const params = {
+      id : _this.props.match.params.id,
       page : _this.state.paginationProps.current,
       limit : _this.state.paginationProps.pageSize,
-      book_name : _this.state.searchData.book_name,
-      author_name : _this.state.searchData.author_name
+      keyword : _this.state.searchData.keyword,
     }
 
-    getArticleList('api/book/list','get',params,function(res){
+    getArticleList('api/book/info','get',params,function(res){
         // console.log('返回',res)
         const data = res.data.map((item , index) => {
           var temp = []
           temp['key'] = item.id
-          temp['book_name'] = item.book_name
-          temp['author_name'] = item.author_name
-          temp['chapter_num'] = item.chapter_num
-          temp['current_page'] = item.current_page
-          temp['last_update_date'] = item.last_update_date
-          temp['last_scan_date'] = item.last_scan_date
-          temp['words'] = item.words
-          temp['url'] = item.url
+          temp['content'] = item.content
+          temp['source_content'] =  item.source_content
           return temp
         })
 
@@ -189,18 +145,17 @@ class BookList extends React.Component {
         });
     })
   }
-  handleBook(record,e){
+  /**处理章节名称 */
+  handleChapter(record,e){
     const params = {
       id : record.key
     }
 
     const _this = this
-    handleBook('api/book/handleBook','post',params,function(res){
+    handleChapter('api/book/handleChapter','post',params,function(res){
       _this.loadData()
     })
-  }
-  handleExport(record,e){
-    window.location.href="http://127.0.0.1/book_spider/public/api/book/export?id=" + record.key
+    
   }
   /*编辑数据*/
   handleEdit(id){
@@ -209,9 +164,6 @@ class BookList extends React.Component {
   /*删除数据*/
   handleDelete(id){
     alert(id)
-  }
-  handleInfo(id){
-    this.props.history.push({pathname:'/book/info' + '/' + id ,query:{id: id}})
   }
   handleClick(){
     alert('hahah');
@@ -224,18 +176,32 @@ class BookList extends React.Component {
       searchData 
     })
   }
+  sourceContentClick(text,e){
+    this.setState({
+      tableDispLay : false,
+      txt_content : text
+    })
+  }
+  contentClick(text,e){
+    this.setState({
+      tableDispLay : false,
+      txt_content : text
+    })
+  }
+  toTableButtonClick(){
+    this.setState({
+      tableDispLay : true,
+    })
+  }
   render() {
     return (
       <>
-        <BreadcrumbComponent path='书籍管理/书籍列表'/>
-        <div className="search" style={{ margin: '16px 15px' }}>
+        <BreadcrumbComponent path='书籍管理/书籍详情'/>
+        {/* <div className="search" style={{ margin: '16px 15px' }}>
           <Form ref={this.formRef} name="search" layout="inline" >
             <Row>
-                <Form.Item name="book_name" label="书名">
-                  <Input placeholder="请输入书名" name="book_name" value={this.state.searchData.book_name} onChange={this.changeInput.bind(this)}/>
-                </Form.Item>
-                <Form.Item name="author_name" label="作者">
-                  <Input placeholder="请输入作者名" name="author_name" value={this.state.searchData.author_name} onChange={this.changeInput.bind(this)}/>
+                <Form.Item name="keyword" label="关键词搜索">
+                  <Input placeholder="请输入作关键词" name="keyword" value={this.state.searchData.keyword} onChange={this.changeInput.bind(this)}/>
                 </Form.Item>
                 <Form.Item> 
                   <Button type="primary" onClick={this.searchSubmit.bind(this)}>
@@ -249,21 +215,29 @@ class BookList extends React.Component {
                 </Form.Item>
             </Row>
           </Form>
-        </div>
-        <Table
-          columns={this.columns}
-          dataSource={this.state.tableData}
-          pagination={this.state.paginationProps}
-          bordered
+        </div> */}
+        {
+          this.state.tableDispLay && 
+          <Table
+            columns={this.columns}
+            dataSource={this.state.tableData}
+            pagination={this.state.paginationProps}
+            bordered
           // title={() => 'Header'}
           // footer={() => 'Footer'}
-        />
+          />
+        }
+        {
+          !this.state.tableDispLay && 
+          <div>
+            <Button className="chapter_content_return" type="primary" onClick={this.toTableButtonClick.bind(this)}>返回列表</Button>
+            <pre>
+              <div dangerouslySetInnerHTML={{__html:this.state.txt_content}}></div>
+            </pre>
+          </div>
+        }
       </>
     );
   }
 };
-
-export default withRouter(BookList);
-
-
 

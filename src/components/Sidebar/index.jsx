@@ -25,7 +25,7 @@ export default class Sidebar extends React.Component {
 
     this.state = {
       theme: 'dark',
-      current: 'bookList1',
+      current: 'wordList1',
     };
 
   }
@@ -58,7 +58,7 @@ export default class Sidebar extends React.Component {
         theme={this.state.theme}
         onClick={this.handleClick}
         // style={{ width: 256 }}
-        defaultOpenKeys={['bookList']}
+        defaultOpenKeys={['wordList']}
         selectedKeys={[this.state.current]}
         mode="inline"
       >
@@ -71,6 +71,9 @@ export default class Sidebar extends React.Component {
         </SubMenu>
         <SubMenu key="bookList" icon={<AppstoreOutlined />} title="书籍管理">
           <Menu.Item key="bookList1"><Link to="/book/list">书籍列表</Link></Menu.Item>
+        </SubMenu>
+        <SubMenu key="wordList" icon={<AppstoreOutlined />} title="字典管理">
+          <Menu.Item key="wordList1"><Link to="/word/list">字典列表</Link></Menu.Item>
         </SubMenu>
         {/* <SubMenu key="sub4" icon={<SettingOutlined />} title="设置">
           <Menu.Item key="3">角色管理</Menu.Item>

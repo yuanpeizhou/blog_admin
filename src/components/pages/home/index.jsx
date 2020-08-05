@@ -18,6 +18,7 @@ class Home extends React.Component {
     this.setState({ collapsed });
   };
   componentDidMount(){
+    console.log('我打印啦',this.props)
     // console.log('加载了')
     // console.log(addNameCreater('ceshi'))
     // axios.get('http://192.168.6.19/blog_server/public/api/article/list', {

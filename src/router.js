@@ -10,6 +10,10 @@ import Welcome from '../src/components/pages/Welcome/index';
 import ArticleList from '../src/components/pages/Article/index'
 import ArticleEdit from '../src/components/pages/Article/edit'
 import BookList from '../src/components/pages/Book/list'
+import BookInfo from '../src/components/pages/Book/info'
+import WordList from '../src/components/pages/Word/list'
+import { Statistic } from "antd";
+
 
 // Each logical "route" has two components, one for
 // the sidebar and one for the main area. We want to
@@ -39,13 +43,27 @@ const routes = [
 			},
 			{
 				path: "/article/update",
-				component: ArticleEdit,
+				component: BookInfo,
 			}
 		]
 	},
 	{
+		path: '/word/list',
+		component: WordList,
+	},
+	{
 		path: "/book/list",
-		component : BookList
+		component : BookList,
+		routes: [
+			{
+				path: "/book/info/:id",
+				component: BookInfo,
+			},
+			{
+				path: "/article/update",
+				component: ArticleEdit,
+			}
+		]
 	}
 ];
 
@@ -63,12 +81,16 @@ export default function RouteConfigExample() {
  * @param {路由树} routes 
  */
 function RouteWithSubRoutes(routes) {
-	return routes.map((item, index) => {
+	let res = []
+	routes.forEach((item, index) => {
+		res.push(<Route key={Date.parse(new Date()) + index}  exact path={item.path} component={item.component} />)
+
 		if(item.routes){
-			return RouteWithSubRoutes(item.routes)
+			res.push(RouteWithSubRoutes(item.routes)) 
 		}
-		return <Route key={Date.parse(new Date()) + index}  exact path={item.path} component={item.component} />
-	})
+	});
+
+	return (res)
 }
 
 
