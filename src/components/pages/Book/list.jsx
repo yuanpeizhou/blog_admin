@@ -44,7 +44,7 @@ class BookList extends React.Component {
         dataIndex: 'book_name',
         width: 250,
         align:'center',
-        render: text => <a>{text}</a>,
+        render: (text,record) => <a target="_blank" href={'/book/info/' + record.key}>{text}</a>,
       },
       {
         title: '作者',
