@@ -70,10 +70,13 @@ export default class Sidebar extends React.Component {
           <Menu.Item key="2"><Link to="/welcome">人员列表</Link></Menu.Item>
         </SubMenu>
         <SubMenu key="bookList" icon={<AppstoreOutlined />} title="书籍管理">
-          <Menu.Item key="bookList1"><Link to="/book/list">书籍列表</Link></Menu.Item>
+          <Menu.Item key="bookList1"><Link to="/book/list/1">书籍列表</Link></Menu.Item>
         </SubMenu>
         <SubMenu key="wordList" icon={<AppstoreOutlined />} title="字典管理">
           <Menu.Item key="wordList1"><Link to="/word/list">字典列表</Link></Menu.Item>
+        </SubMenu>
+        <SubMenu key="videoList" icon={<AppstoreOutlined />} title="直播管理">
+          <Menu.Item key="videoList1"><Link to="/video/list">直播列表</Link></Menu.Item>
         </SubMenu>
         {/* <SubMenu key="sub4" icon={<SettingOutlined />} title="设置">
           <Menu.Item key="3">角色管理</Menu.Item>

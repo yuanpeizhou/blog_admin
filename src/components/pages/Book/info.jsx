@@ -3,7 +3,7 @@ import { Table, Input , Row , Button ,Form} from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
 import ActionButton from '../../ActionButton/index'
 
-import {getArticleList,handleChapter} from '../../../api';
+import {getArticleList,handleChapter,handleChapterSpider} from '../../../api';
 
 export default class BookInfo extends React.Component {
   formRef = React.createRef();
@@ -56,7 +56,7 @@ export default class BookInfo extends React.Component {
         dataIndex: 'address',
         width: 200,
         align: 'center',
-        render: (text, record, index) => <ActionButton handleClick={this.handleChapter.bind(this,record)} editClick={this.handleEdit} deleteClick={this.handleDelete} value={record}/>
+        render: (text, record, index) => <ActionButton  spiderClick={this.handleSipder.bind(this,record)} handleClick={this.handleChapter.bind(this,record)} value={record}/>
       },
     ];
 
@@ -145,7 +145,7 @@ export default class BookInfo extends React.Component {
         });
     })
   }
-  /**处理章节名称 */
+  /**处理章节 */
   handleChapter(record,e){
     const params = {
       id : record.key
@@ -156,6 +156,16 @@ export default class BookInfo extends React.Component {
       _this.loadData()
     })
     
+  }
+  /**爬取章节 */
+  handleSipder(record,e){
+    const params = {
+      id : record.key
+    }
+    const _this = this
+    handleChapter('api/chapter/spider','get',params,function(res){
+      _this.loadData()
+    })
   }
   /*编辑数据*/
   handleEdit(id){

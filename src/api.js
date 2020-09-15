@@ -13,7 +13,6 @@ function httpRequest(url,method = 'get',params,charset,callback){
         params: params
       })
       .then(function (response) {
-        // console.log(response);
         callback(response.data.data)
       })
       .catch(function (error) {
@@ -57,4 +56,14 @@ export function handleBook(url,method = "post",params,callback,charset="utf-8"){
 /**处理书籍数据 */
 export function handleBookExport(url,method = "get",params,callback,charset="utf-8"){
   return httpRequest(url,method,params,charset,callback)
+}
+
+/**章节数据爬取 */
+export function handleChapterSpider(url,method = "get",params,callback,charset="utf-8"){
+  return httpRequest(url,method,params,charset,callback)
+}
+
+/**获取直播推流 */
+export function getVideoList(params,callback,charset="utf-8"){
+  return httpRequest('api/video/list','get',params,charset,callback)
 }

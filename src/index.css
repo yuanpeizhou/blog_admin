@@ -28,4 +28,11 @@ code {
   margin: 16px;
 }
 
+.videolist{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: -webkit-flex;
+}
 @import './components/ActionButton/index.css'

@@ -1,11 +1,17 @@
 import React from "react";
-import { Table, Input , Row , Col , Button ,Form} from 'antd';
+import { Input , Row  , Button ,Form , Card,Modal} from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
 import ActionButton from '../../ActionButton/index'
 
-import {getArticleList,handleBook,handleBookExport} from '../../../api';
+import {getArticleList,handleBook,getVideoList} from '../../../api';
 
 import { withRouter } from "react-router";
+import videojs from 'video.js'
+import 'video.js/dist/video-js.css'
+import SWF_URL from 'videojs-swf/dist/video-js.swf'
+videojs.options.flash.swf = SWF_URL // 设置flash路径，Video.js会在不支持html5的浏览中使用flash播放视频文件
+
+const { Meta } = Card;
 
 
 class BookList extends React.Component {
@@ -15,87 +21,26 @@ class BookList extends React.Component {
     super(props);
 
     this.state = {
-      tableData: [],
+      videoList: [],
+      pageList: [],
+      rtmp: '',
       paginationProps: {
         position: ['none', 'bottomRight'],
         showSizeChanger: false,
         showQuickJumper: false,
         showTotal: () => `共0条`,
         pageSize: 10,
-        current: this.props.match.params.page ? this.props.match.params.page : 1,
+        current: 1,
         total: 0,
         onChange: (current) => this.changePage(current),
       },
       searchData: {
         book_name : '',
         author_name : ''
-      }
+      },
+      visible: false
     };
 
-    this.columns = [
-      {
-        title: 'id',
-        dataIndex: 'key',
-        width: 30,
-        align:'center',
-      },
-      {
-        title: '书名',
-        dataIndex: 'book_name',
-        width: 250,
-        align:'center',
-        render: (text,record) => <a target="_blank" href={'/book/info/' + record.key}>{text}</a>,
-      },
-      {
-        title: '作者',
-        dataIndex: 'author_name',
-        width: 150,
-        align:'center',
-      },
-      {
-        title: '章节总数量',
-        dataIndex: 'chapter_num',
-        width: 110,
-        align:'center',
-      },
-      {
-        title: '爬取章节数',
-        dataIndex: 'current_page',
-        width: 110,
-        align:'center',
-      },
-      {
-        title: '上次更新日期',
-        dataIndex: 'last_update_date',
-        width: 130,
-        align:'center',
-      },
-      {
-        title: '上次扫描日期',
-        dataIndex: 'last_scan_date',
-        width: 130,
-        align:'center',
-      },
-      {
-        title: '字数',
-        dataIndex: 'words',
-        width: 50,
-        align:'center',
-      },
-      {
-        title: '链接',
-        dataIndex: 'url',
-        align: 'center',
-      render: text => <a target="_blank" href={text}>{text}</a>,
-      },
-      {
-        title: '操作',
-        dataIndex: 'address',
-        width: 400,
-        align: 'center',
-        render: (text, record, index) => <ActionButton infoClick={this.handleInfo.bind(this)} handleClick={this.handleBook.bind(this,record)} exportClick={this.handleExport.bind(this,record)}  value={record}/>
-      },
-    ];
 
     this.loadData = this.loadData.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -153,43 +98,20 @@ class BookList extends React.Component {
   }
   /*加载数据*/
   loadData(isInit = true){
+
     const _this = this 
-
-    const params = {
-      page : _this.state.paginationProps.current,
-      limit : _this.state.paginationProps.pageSize,
-      book_name : _this.state.searchData.book_name,
-      author_name : _this.state.searchData.author_name
-    }
-
-    getArticleList('api/book/list','get',params,function(res){
-        // console.log('返回',res)
-        const data = res.data.map((item , index) => {
-          var temp = []
-          temp['key'] = item.id
-          temp['book_name'] = item.book_name
-          temp['author_name'] = item.author_name
-          temp['chapter_num'] = item.chapter_num
-          temp['current_page'] = item.current_page
-          temp['last_update_date'] = item.last_update_date
-          temp['last_scan_date'] = item.last_scan_date
-          temp['words'] = item.words
-          temp['url'] = item.url
-          return temp
-        })
-
-        /**更新分页信息 */
-        const pageData = _this.state.paginationProps
-        pageData.total = res.total
-        pageData.current = res.current_page
-        pageData.pageSize = res.per_page
-        pageData.showTotal = () => `共`+ res.total +`条`
-
+    getVideoList(null,function(res){
+      // console.log(res)
+      if(res){
+        const temp = JSON.parse(res)
         _this.setState({
-          tableData : data,
-          paginationProps : pageData
+          videoList : temp.data,
+          pageList: temp.data.slice(0,_this.state.paginationProps.pageSize)
         });
-    })
+      }
+      console.log(_this.state.pageList)
+    });
+
   }
   handleBook(record,e){
     const params = {
@@ -226,6 +148,42 @@ class BookList extends React.Component {
       searchData 
     })
   }
+  videoClick(video){
+    this.setState({
+      // visible: true,
+      rtmp: video
+    });
+    this.loadPlayer(video)
+    // setTimeout(
+    //   this.loadPlayer(video)
+    // ,1000)
+
+  }
+  showModal = () => {
+
+  };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+  loadPlayer(video){
+    const videoPlayer = videojs('my-player');// 关联video标签的id
+    videoPlayer.src({
+      src: video,
+      type: 'rtmp/flv'
+    });
+    videoPlayer.play();
+  }
   render() {
     return (
       <>
@@ -252,14 +210,41 @@ class BookList extends React.Component {
             </Row>
           </Form>
         </div>
-        <Table
-          columns={this.columns}
-          dataSource={this.state.tableData}
-          pagination={this.state.paginationProps}
-          bordered
-          // title={() => 'Header'}
-          // footer={() => 'Footer'}
-        />
+        {
+          <div className="videolist">
+            {
+              this.state.pageList.length > 0 && this.state.pageList.map((item,index) => {
+                return <Card
+                  key={index}
+                  hoverable
+                  style={{margin: 15 , width: 260 }}
+                  // src={item.cover}
+                  cover={<img alt="example"  />}
+                  // style={{ width: 260}}
+                  onClick={this.videoClick.bind(this,item.video)}
+                >
+                  <Meta title={item.name}  />
+                </Card>
+              })
+            }
+          </div>
+        }
+        <Modal
+          title="播放"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+        </Modal>
+        <video id="my-player"
+            className="video-js vjs-default-skin vjs-big-play-centered"
+              preload="auto"
+              autoplay
+              style={{width: 450,height: 300}}
+              controls
+              data-setup=''>
+            <source src={this.state.rtmp} type="rtmp/flv"/>
+          </video>
       </>
     );
   }
@@ -267,5 +252,5 @@ class BookList extends React.Component {
 
 export default withRouter(BookList);
 
-
+//description="www.instagram.com"
 

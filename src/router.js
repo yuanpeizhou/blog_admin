@@ -12,6 +12,7 @@ import ArticleEdit from '../src/components/pages/Article/edit'
 import BookList from '../src/components/pages/Book/list'
 import BookInfo from '../src/components/pages/Book/info'
 import WordList from '../src/components/pages/Word/list'
+import VideoList from '../src/components/pages/Video/list'
 import { Statistic } from "antd";
 
 
@@ -52,7 +53,11 @@ const routes = [
 		component: WordList,
 	},
 	{
-		path: "/book/list",
+		path: '/video/list',
+		component: VideoList,
+	},
+	{
+		path: "/book/list/:page",
 		component : BookList,
 		routes: [
 			{
