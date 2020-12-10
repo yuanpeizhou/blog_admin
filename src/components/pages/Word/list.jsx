@@ -28,6 +28,12 @@ export default class WordList extends React.Component {
 
     this.columns = [
       {
+        title: 'id',
+        dataIndex: 'key',
+        width: 100,
+        align:'center',
+      },
+      {
         title: '线上图片',
         dataIndex: 'origin_url',
         width: 400,

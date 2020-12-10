@@ -101,12 +101,14 @@ class BookList extends React.Component {
 
     const _this = this 
     getVideoList(null,function(res){
-      // console.log(res)
+      console.log('1',res)
       if(res){
-        const temp = JSON.parse(res)
+        const temp = {
+          data : res
+        }
         _this.setState({
           videoList : temp.data,
-          pageList: temp.data.slice(0,_this.state.paginationProps.pageSize)
+          pageList: temp.data.slice((_this.state.paginationProps.current - 1)*_this.state.paginationProps.pageSize,_this.state.paginationProps.current*_this.state.paginationProps.pageSize)
         });
       }
       console.log(_this.state.pageList)
