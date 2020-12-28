@@ -46,8 +46,8 @@ export default class ImgsInfo extends React.Component {
   render() {
     return <div>
         {this.state.list.map((item,index) => {
-          return <div>
-            <img style={{ margin: '16px 0',width : '100%' }} key={index} src={item.url}></img>
+          return <div key={index}>
+            <img style={{ margin: '16px 0',width : '100%' }} src={item.url}></img>
           </div>
         })}
     </div>

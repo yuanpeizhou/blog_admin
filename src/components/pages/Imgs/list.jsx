@@ -7,26 +7,30 @@ export default class ImgsList extends React.Component {
   constructor(props) {
 
     super(props);
+    const img_id = localStorage.getItem('img_page')
+
+    
 
     this.state = {
       list: [],
-      current: 1,
+      current: img_id ? img_id : 1,
       pageSize : 10,
       total : 1 
     };
 
-
+    console.log(this.state.current)
     this.loadData = this.loadData.bind(this);
     this.changePage = this.changePage.bind(this)
     // this.goInfo = this.goInfo.bind(this)
   }
   componentDidMount(){
-    this.loadData()
+    this.loadData(this.state.current ? this.state.current : 1)
   }
   changePage(current){
     this.loadData(current,this.state.pageSize)
   }
   goInfo(id){
+    localStorage.setItem('img_page',this.state.current)
     this.props.history.push({pathname:'/imgs/info' + '/' + id ,query:{id: id}})
   }
   /*加载数据*/
@@ -52,11 +56,11 @@ export default class ImgsList extends React.Component {
   render() {
     return  <div style={{ margin: '16px 0' }}>
         {this.state.list.map((item,index) => {
-          return <div>
-            <h1 key={index} onClick={this.goInfo.bind(this,item.key)} style={{ margin: '10px 0' }}>{item.name}({item.number})</h1>
+          return <div key={index}>
+            <h1 onClick={this.goInfo.bind(this,item.key)} style={{ margin: '10px 0' }}>{item.name}({item.number})</h1>
           </div>
         })}
-        <Pagination defaultCurrent={this.state.current_page} total={this.state.total} onChange={(current) => this.changePage(current)}/>
+        <Pagination current={this.state.current} total={this.state.total} onChange={(current) => this.changePage(current)}/>
     </div>
   }
 };
