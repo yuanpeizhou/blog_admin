@@ -13,6 +13,8 @@ import BookList from '../src/components/pages/Book/list'
 import BookInfo from '../src/components/pages/Book/info'
 import WordList from '../src/components/pages/Word/list'
 import VideoList from '../src/components/pages/Video/list'
+import Imgs from '../src/components/pages/Imgs/list'
+import ImgsInfo from '../src/components/pages/ImgsInfo/index'
 import { Statistic } from "antd";
 
 
@@ -67,6 +69,16 @@ const routes = [
 			{
 				path: "/article/update",
 				component: ArticleEdit,
+			}
+		]
+	},
+	{
+		path: '/imgs/list/:page',
+		component : Imgs,
+		routes : [
+			{
+				path: "/imgs/info/:id",
+				component: ImgsInfo,
 			}
 		]
 	}

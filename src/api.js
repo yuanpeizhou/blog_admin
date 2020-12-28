@@ -71,3 +71,14 @@ export function handleChapterSpider(url,method = "get",params,callback,charset="
 export function getVideoList(params,callback,charset="utf-8"){
   return httpRequest('http://192.168.6.19/video/Video.php','get',params,charset,callback)
 }
+
+
+/**获取套图列表 */
+export function getImgsList(url,method = "get",params,callback,charset="utf-8"){
+  return httpRequest(url,method,params,charset,callback)
+}
+
+/**获取套图详情 */
+export function getImgsInfo(url,method = "get",params,callback,charset="utf-8"){
+  return httpRequest(url,method,params,charset,callback)
+}
