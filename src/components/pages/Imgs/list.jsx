@@ -42,6 +42,7 @@ export default class ImgsList extends React.Component {
         temp['key'] = item.id
         temp['name'] = item.name
         temp['number'] = item.number
+        temp['img_list'] = item.img_list
         return temp
       })
 
@@ -58,6 +59,9 @@ export default class ImgsList extends React.Component {
         {this.state.list.map((item,index) => {
           return <div key={index}>
             <h1 onClick={this.goInfo.bind(this,item.key)} style={{ margin: '10px 0' }}>{item.name}({item.number})</h1>
+            {
+              item
+            }
           </div>
         })}
         <Pagination current={this.state.current} total={this.state.total} onChange={(current) => this.changePage(current)}/>
