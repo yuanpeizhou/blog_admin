@@ -63,6 +63,9 @@ export default class Sidebar extends React.Component {
         mode="inline"
       >
         {/* <Router><Link to="/article/list">文章列表</Link></Router> */}
+        <SubMenu key="website" icon={<MailOutlined />} title="网站管理">
+          <Menu.Item key="websiteList"><Link to="/website/list/1">网站列表</Link></Menu.Item>
+        </SubMenu>
         <SubMenu key="sub1" icon={<MailOutlined />} title="文章管理">
           <Menu.Item key="1"><Link to="/article/list">文章列表</Link></Menu.Item>
         </SubMenu>

@@ -36,10 +36,10 @@ class Home extends React.Component {
   render() {
     return (
       <Layout style={{ minHeight: '100vh' }}>
-        {/* <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
           <div className="logo" />
           <Sidebar/>
-        </Sider> */}
+        </Sider>
         <Layout className="site-layout">
           <Content style={{ margin: '0 16px' }}>
             <Router /> 

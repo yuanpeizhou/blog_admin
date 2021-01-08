@@ -82,3 +82,9 @@ export function getImgsList(url,method = "get",params,callback,charset="utf-8"){
 export function getImgsInfo(url,method = "get",params,callback,charset="utf-8"){
   return httpRequest(url,method,params,charset,callback)
 }
+
+
+/**获取网站列表 */
+export function getWebsiteList(url,method = "get",params,callback,charset="utf-8"){
+  return httpRequest(url,method,params,charset,callback)
+}

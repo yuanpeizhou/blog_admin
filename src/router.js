@@ -15,6 +15,7 @@ import WordList from '../src/components/pages/Word/list'
 import VideoList from '../src/components/pages/Video/list'
 import Imgs from '../src/components/pages/Imgs/list'
 import ImgsInfo from '../src/components/pages/ImgsInfo/index'
+import WebList from '../src/components/pages/Website/list' //网站列表
 import { Statistic } from "antd";
 
 
@@ -80,6 +81,15 @@ const routes = [
 				path: "/imgs/info/:id",
 				component: ImgsInfo,
 			}
+		]
+	},
+	/**
+	 * 网站管理
+	 */
+	{
+		path: '/website/list/:page',
+		component : WebList,
+		routes: [
 		]
 	}
 ];
