@@ -88,3 +88,12 @@ export function getImgsInfo(url,method = "get",params,callback,charset="utf-8"){
 export function getWebsiteList(url,method = "get",params,callback,charset="utf-8"){
   return httpRequest(url,method,params,charset,callback)
 }
+
+/**获取书籍列表 */
+export function getBookList(params,callback){
+  return httpRequest('admin/book/list','get',params,'utf-8',callback)
+}
+
+export function getSpiderCommond(params,callback){
+  return httpRequest('admin/book/getSpiderCommond','get',params,'utf-8',callback)
+}

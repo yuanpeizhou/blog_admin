@@ -22,7 +22,6 @@ export default class WebsiteList extends React.Component {
         onChange: (current) => this.changePage(current),
       },
     };
-
     this.columns = [
         {
           title: '排序',

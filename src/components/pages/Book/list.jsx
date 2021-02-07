@@ -1,9 +1,9 @@
 import React from "react";
-import { Table, Input , Row , Col , Button ,Form} from 'antd';
+import { Table, Input , Row , Col , Button ,Form , Popover} from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
 import ActionButton from '../../ActionButton/index'
 
-import {getArticleList,handleBook,handleBookExport} from '../../../api';
+import {getArticleList,handleBook,handleBookExport,getBookList,getSpiderCommond} from '../../../api';
 
 import { withRouter } from "react-router";
 
@@ -29,7 +29,8 @@ class BookList extends React.Component {
       searchData: {
         book_name : '',
         author_name : ''
-      }
+      },
+      visible: false,//弹出层
     };
 
     this.columns = [
@@ -41,7 +42,7 @@ class BookList extends React.Component {
       },
       {
         title: '书名',
-        dataIndex: 'book_name',
+        dataIndex: 'author_name',
         width: 250,
         align:'center',
         render: (text,record) => <a target="_blank" href={'/book/info/' + record.key}>{text}</a>,
@@ -93,7 +94,16 @@ class BookList extends React.Component {
         dataIndex: 'address',
         width: 400,
         align: 'center',
-        render: (text, record, index) => <ActionButton infoClick={this.handleInfo.bind(this)} handleClick={this.handleBook.bind(this,record)} exportClick={this.handleExport.bind(this,record)}  value={record}/>
+        render: (text, record, index) => 
+        <>
+          <ActionButton 
+            infoClick={this.handleInfo.bind(this)} 
+            handleClick={this.handleBook.bind(this,record)}
+            exportClick={this.handleExport.bind(this,record)}  
+            getSpiderClick={this.getSpiderClick.bind(this.record)}
+            value={record}
+          />
+        </>
       },
     ];
 
@@ -162,7 +172,7 @@ class BookList extends React.Component {
       author_name : _this.state.searchData.author_name
     }
 
-    getArticleList('api/book/list','get',params,function(res){
+    getBookList(params,function(res){
         // console.log('返回',res)
         const data = res.data.map((item , index) => {
           var temp = []
@@ -204,6 +214,15 @@ class BookList extends React.Component {
   handleExport(record,e){
     window.location.href="http://127.0.0.1/book_spider/public/api/book/export?id=" + record.key
   }
+  getSpiderClick(id){
+    const params = {
+      id : id
+    }
+    console.log(params)
+    getSpiderCommond(params,function(res){
+      console.log(res)
+    })
+  }
   /*编辑数据*/
   handleEdit(id){
     alert(id)
@@ -226,6 +245,16 @@ class BookList extends React.Component {
       searchData 
     })
   }
+  /**弹出层隐藏 */
+  hide = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+  /**弹出层变化 */
+  handleVisibleChange = visible => {
+    this.setState({ visible });
+  };
   render() {
     return (
       <>

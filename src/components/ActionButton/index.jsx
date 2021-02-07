@@ -17,6 +17,7 @@ export default class ActionButton extends React.Component {
       handleClick: props.handleClick,
       exportClick: props.exportClick,
       spiderClick: props.spiderClick,
+      getSpiderClick: props.getSpiderClick,
       id: props.value.key
     }
     this.editHandleClick = this.editHandleClick.bind(this);
@@ -26,6 +27,7 @@ export default class ActionButton extends React.Component {
     this.handleClick = this.handleClick.bind(this)
     this.exportClick = this.exportClick.bind(this)
     this.spiderClick = this.spiderClick.bind(this)
+    this.getSpiderClick = this.getSpiderClick.bind(this)
   }
   editHandleClick(){
     this.state.editClick(this.state.id)
@@ -48,9 +50,15 @@ export default class ActionButton extends React.Component {
   spiderClick(){
     this.state.spiderClick(this.state.id)
   }
+  getSpiderClick(){
+    this.state.getSpiderClick(this.state.id)
+  }
   render() {
     return (
       <>
+      {
+        this.state.getSpiderClick && <Button type="primary" onClick={this.getSpiderClick} size="small">书籍爬取</Button>
+      }  
       {
         this.state.scanClick && <Button className='scan_button' type="primary" onClick={this.scanClick} size="small">扫描</Button>
       }  
