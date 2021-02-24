@@ -1,5 +1,5 @@
 import React from "react";
-import { Pagination } from 'antd';
+import { Pagination,Search } from 'antd';
 import {getImgsList} from '../../../api';
 
 
@@ -18,7 +18,7 @@ export default class ImgsList extends React.Component {
       total : 1 
     };
 
-    console.log(this.state.current)
+    // console.log(this.state.current)
     this.loadData = this.loadData.bind(this);
     this.changePage = this.changePage.bind(this)
     // this.goInfo = this.goInfo.bind(this)
