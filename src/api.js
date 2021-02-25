@@ -1,13 +1,13 @@
 
 import axios from 'axios'
 
-const api_host_local = 'http://127.0.0.1/book_spider/public/'
+// const api_host_local = 'http://127.0.0.1/book_spider/public/'
 const api_host_company = 'http://192.168.6.98/book_spider/public/'
 
 
 function httpRequest(url,method = 'get',params,charset,callback){
   var apiUrl = ''
-  if(url.indexOf('http') != -1){
+  if(url.indexOf('http') !== -1){
     apiUrl = url
   }else{
     apiUrl = api_host_company + url

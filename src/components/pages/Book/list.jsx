@@ -1,10 +1,9 @@
 import React from "react";
-import { Table, Input , Row , Col , Button ,Form , Popover} from 'antd';
+import { Table, Input , Row , Button ,Form} from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
 import ActionButton from '../../ActionButton/index'
 
-import {getArticleList,handleBook,handleBookExport,getBookList,getSpiderCommond} from '../../../api';
-
+import {handleBook,getBookList,getSpiderCommond} from '../../../api';
 import { withRouter } from "react-router";
 
 
@@ -45,7 +44,7 @@ class BookList extends React.Component {
         dataIndex: 'author_name',
         width: 250,
         align:'center',
-        render: (text,record) => <a target="_blank" href={'/book/info/' + record.key}>{text}</a>,
+        render: (text,record) => <a target="_blank" rel="noopener noreferrer" href={'/book/info/' + record.key}>{text}</a>,
       },
       {
         title: '作者',
@@ -87,7 +86,7 @@ class BookList extends React.Component {
         title: '链接',
         dataIndex: 'url',
         align: 'center',
-      render: text => <a target="_blank" href={text}>{text}</a>,
+      render: text => <a target="_blank" rel="noopener noreferrer" href={text}>{text}</a>,
       },
       {
         title: '操作',
@@ -232,7 +231,7 @@ class BookList extends React.Component {
     alert(id)
   }
   handleInfo(id){
-    this.props.history.push({pathname:'/book/info' + '/' + id ,query:{id: id}})
+    this.props.history.push({pathname:'/book/info/' + id ,query:{id: id}})
   }
   handleClick(){
     alert('hahah');

@@ -3,21 +3,9 @@ import React from 'react';
 
 import { Menu } from 'antd';
 import { Link } from "react-router-dom";
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
-// import {
-//   AppstoreOutlined,
-//   BarChartOutlined,
-//   CloudOutlined,
-//   ShopOutlined,
-//   TeamOutlined,
-//   UserOutlined,
-//   UploadOutlined,
-//   VideoCameraOutlined,
-// } from '@ant-design/icons';
+import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
-// import 'antd/dist/antd.css';
-
 
 export default class Sidebar extends React.Component {
   constructor(props) {

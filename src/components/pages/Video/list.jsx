@@ -1,9 +1,8 @@
 import React from "react";
 import { Input , Row  , Button ,Form , Card,Modal} from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
-import ActionButton from '../../ActionButton/index'
 
-import {getArticleList,handleBook,getVideoList} from '../../../api';
+import {handleBook,getVideoList} from '../../../api';
 
 import { withRouter } from "react-router";
 import videojs from 'video.js'
@@ -137,7 +136,7 @@ class BookList extends React.Component {
     alert(id)
   }
   handleInfo(id){
-    this.props.history.push({pathname:'/book/info' + '/' + id ,query:{id: id}})
+    this.props.history.push({pathname:'/book/info/' + id ,query:{id: id}})
   }
   handleClick(){
     alert('hahah');

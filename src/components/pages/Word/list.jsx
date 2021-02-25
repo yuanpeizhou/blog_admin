@@ -1,7 +1,6 @@
 import React from "react";
 import { Table,Form,Input } from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
-import ActionButton from '../../ActionButton/index'
 
 import {getWordList,wordUpdate} from '../../../api';
 
@@ -38,14 +37,14 @@ export default class WordList extends React.Component {
         dataIndex: 'origin_url',
         width: 400,
         align:'center',
-        render: text => <img src={text}></img>,
+        render: text => <img src={text} alt="加载失败"></img>,
       },
       {
         title: '本地图片',
         dataIndex: 'local_url',
         width: 400,
         align:'center',
-        render: text => <img src={text}></img>,
+        render: text => <img src={text} alt="加载失败"></img>,
       },
       {
         title: '文本',

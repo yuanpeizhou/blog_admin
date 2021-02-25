@@ -1,9 +1,9 @@
 import React from "react";
-import { Table, Input , Row , Button ,Form} from 'antd';
+import { Table,Button} from 'antd';
 import BreadcrumbComponent from '../../Breadcrumb/index'
 import ActionButton from '../../ActionButton/index'
 
-import {getArticleList,handleChapter,handleChapterSpider} from '../../../api';
+import {getArticleList,handleChapter} from '../../../api';
 
 export default class BookInfo extends React.Component {
   formRef = React.createRef();

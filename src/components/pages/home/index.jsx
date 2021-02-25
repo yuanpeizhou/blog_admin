@@ -6,11 +6,11 @@ import Router from '../../../router';
 import 'antd/dist/antd.css';
 
 
-const { Header, Content, Footer, Sider } = Layout;
+const {Content,Sider } = Layout;
 
 class Home extends React.Component {
   state = {
-    collapsed: true,
+    collapsed: false,
     sider: false
   };
 
@@ -19,20 +19,6 @@ class Home extends React.Component {
     this.setState({ collapsed });
   };
   componentDidMount(){
-    // console.log('我打印啦',this.props)
-    // console.log('加载了')
-    // console.log(addNameCreater('ceshi'))
-    // axios.get('http://192.168.6.19/blog_server/public/api/article/list', {
-    //   params: {
-    //     // ID: 12345
-    //   }
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   }
   render() {
     return (
@@ -49,8 +35,6 @@ class Home extends React.Component {
         </Layout>
       </Layout>
     );
-
-    {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
   }
 };
 

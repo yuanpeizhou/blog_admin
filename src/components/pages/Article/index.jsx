@@ -42,7 +42,6 @@ export default class ArticleList extends React.Component {
         dataIndex: 'name',
         width: 200,
         align:'center',
-        render: text => <a>{text}</a>,
       },
       {
         title: 'Cash Assets',
