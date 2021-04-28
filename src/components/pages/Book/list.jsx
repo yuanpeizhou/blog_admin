@@ -26,10 +26,10 @@ class BookList extends React.Component {
         onChange: (current) => this.changePage(current),
       },
       searchData: {
-        book_name : '',
+        book_name : '测试',
         author_name : ''
       },
-      visible: false,//弹出层
+      searchLocalStorageKey: 'book_list_search_data',
     };
 
     this.columns = [
@@ -41,7 +41,7 @@ class BookList extends React.Component {
       },
       {
         title: '书名',
-        dataIndex: 'author_name',
+        dataIndex: 'book_name',
         width: 250,
         align:'center',
         render: (text,record) => <a target="_blank" rel="noopener noreferrer" href={'/book/info/' + record.key}>{text}</a>,
@@ -109,10 +109,27 @@ class BookList extends React.Component {
     this.loadData = this.loadData.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    // this.changeInput = this.changeInput.bind(this)
     // this.searchSubmit = this.searchSubmit(this)
   }
   componentDidMount(){
-    this.loadData()
+    const search = localStorage.getItem(this.state.searchLocalStorageKey)
+    
+
+    if(search){
+      const searchData = JSON.parse(search)
+      this.setState({
+        searchData: searchData
+      },function(){
+        this.formRef.current.setFieldsValue({
+          book_name: searchData.book_name,
+          author_name: searchData.author_name
+        })
+        this.loadData()   
+      })
+    }else{
+      this.loadData()  
+    }
   }
   /**翻页 */
   changePage(current){
@@ -133,6 +150,8 @@ class BookList extends React.Component {
     const pageData = this.state.paginationProps
 
     pageData.current = 1
+
+    localStorage.setItem(this.state.searchLocalStorageKey,JSON.stringify(this.state.searchData))
 
     this.setState({
       paginationProps : pageData
@@ -261,7 +280,7 @@ class BookList extends React.Component {
         <div className="search" style={{ margin: '16px 15px' }}>
           <Form ref={this.formRef} name="search" layout="inline" >
             <Row>
-                <Form.Item name="book_name" label="书名">
+                <Form.Item name="book_name" label="书名">                  
                   <Input placeholder="请输入书名" name="book_name" value={this.state.searchData.book_name} onChange={this.changeInput.bind(this)}/>
                 </Form.Item>
                 <Form.Item name="author_name" label="作者">
