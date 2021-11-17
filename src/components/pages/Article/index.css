@@ -1,0 +1,9 @@
+.form_box{
+    margin: 50px 80px;
+    background: #fff;
+    /* height: 300px; */
+}
+
+.article_form{
+    padding: 80px 50px !important;
+}

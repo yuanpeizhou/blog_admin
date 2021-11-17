@@ -35,4 +35,8 @@ code {
   flex-wrap: wrap;
   display: -webkit-flex;
 }
-@import './components/ActionButton/index.css'
+
+@import './components/pages/Article/index.css';
+@import './components/ActionButton/index.css';
+
+

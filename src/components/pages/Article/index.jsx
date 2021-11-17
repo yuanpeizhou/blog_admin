@@ -97,7 +97,8 @@ export default class ArticleList extends React.Component {
   }
   /*编辑数据*/
   handleEdit(id) {
-    alert(id)
+    // alert(id)
+    this.props.history.push({ pathname: '/article/insert' })
   }
   /*删除数据*/
   handleDelete(id) {
