@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Checkbox, Upload, message, TextArea } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-// import { getArticleInfo } from '../../../api';
+import { storeArticle } from '../../../api';
 import editor from "wangeditor"
 
 
@@ -19,9 +19,9 @@ export default class ArticleStore extends React.Component {
 
         this.onFinish = this.onFinish.bind(this)
         this.onFinishFailed = this.onFinishFailed.bind(this)
-        this.beforeUpload = this.beforeUpload.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.getBase64 = this.getBase64.bind(this)
+        // this.beforeUpload = this.beforeUpload.bind(this)
+        // this.handleChange = this.handleChange.bind(this)
+        // this.getBase64 = this.getBase64.bind(this)
     }
 
     componentDidMount() {
@@ -32,41 +32,56 @@ export default class ArticleStore extends React.Component {
 
     onFinish = (values) => {
         console.log('Success:', values);
+        this.saveArticle(values)
     };
 
     onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-    getBase64(img, callback) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
+
+        // console.log('Failed:', errorInfo);
     };
 
-    beforeUpload(file) {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-        if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG file!');
-        }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-        }
-        return isJpgOrPng && isLt2M;
+    saveArticle(params){
+        var _this = this
+        storeArticle(params,function(res){
+            if(res.code != 200){
+                message.error(res.message)
+            }else{
+                message.success(res.message)
+                _this.props.history.replace({ pathname: '/article/list' })
+            }
+        })
     }
-    handleChange(info) {
-        if (info.file.status === 'uploading') {
-            this.loading = true;
-            return;
-        }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            this.getBase64(info.file.originFileObj, imageUrl => {
-                this.imageUrl = imageUrl;
-                this.loading = false;
-            });
-        }
-    }
+
+
+    // getBase64(img, callback) {
+    //     const reader = new FileReader();
+    //     reader.addEventListener('load', () => callback(reader.result));
+    //     reader.readAsDataURL(img);
+    // };
+    // beforeUpload(file) {
+    //     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    //     if (!isJpgOrPng) {
+    //         message.error('You can only upload JPG/PNG file!');
+    //     }
+    //     const isLt2M = file.size / 1024 / 1024 < 2;
+    //     if (!isLt2M) {
+    //         message.error('Image must smaller than 2MB!');
+    //     }
+    //     return isJpgOrPng && isLt2M;
+    // }
+    // handleChange(info) {
+    //     if (info.file.status === 'uploading') {
+    //         this.loading = true;
+    //         return;
+    //     }
+    //     if (info.file.status === 'done') {
+    //         // Get this url from response in real world.
+    //         this.getBase64(info.file.originFileObj, imageUrl => {
+    //             this.imageUrl = imageUrl;
+    //             this.loading = false;
+    //         });
+    //     }
+    // }
     render() {
         return (
             <div className="form_box">
@@ -88,7 +103,7 @@ export default class ArticleStore extends React.Component {
                         <Input />
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="封面"
                         name="cover"
                     // rules={[{ required: true, message: 'Please input your password!' }]}
@@ -107,7 +122,7 @@ export default class ArticleStore extends React.Component {
                                 <div style={{ marginTop: 8 }}>Upload</div>
                             </div>}
                         </Upload>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item wrapperCol={{ offset: 0, span: 16 }}
                         label="内容"
