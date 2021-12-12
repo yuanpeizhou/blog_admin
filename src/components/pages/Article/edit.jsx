@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Checkbox, Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { getArticleInfo } from '../../../api';
 import editor from "wangeditor"
 
 
@@ -63,6 +64,29 @@ export default class ArticleEdit extends React.Component {
         this.loading = false;
       });
     }
+  }
+  componentDidMount() {
+    this.loadData()
+  }
+  /*加载数据*/
+  loadData(isInit = true) {
+
+    const _this = this
+
+    getArticleInfo(_this.props.match.params.id, function (res) {
+      console.log(res)
+      // const data = res.data.map((item, index) => {
+      //   var temp = []
+      //   temp['key'] = item.id
+      //   temp['title'] = item.title
+      //   temp['cover'] = item.cover
+      //   temp['content'] = item.content
+      //   temp['created_at'] = item.created_at
+      //   temp['current_page'] = item.current_page
+      //   return temp
+      // })
+
+    })
   }
   render() {
     return (

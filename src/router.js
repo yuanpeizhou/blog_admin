@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  Switch,
-  Route
+	Switch,
+	Route
 } from "react-router-dom";
 
 
@@ -13,6 +13,7 @@ import BookInfo from '../src/components/pages/Book/info'
 import WordList from '../src/components/pages/Word/list'
 import VideoList from '../src/components/pages/Video/list'
 import WebList from '../src/components/pages/Website/list' //网站列表
+import ArticleStore from "./components/pages/Article/store";
 
 
 // Each logical "route" has two components, one for
@@ -27,11 +28,11 @@ import WebList from '../src/components/pages/Website/list' //网站列表
 const routes = [
 	{
 		path: "/",
-		component:Welcome
+		component: Welcome
 	},
 	{
-	  path: "/welcome",
-	  component: Welcome
+		path: "/welcome",
+		component: Welcome
 	},
 	{
 		path: "/article/list",
@@ -39,7 +40,7 @@ const routes = [
 		routes: [
 			{
 				path: "/article/insert",
-				component: ArticleEdit,
+				component: ArticleStore,
 			},
 			{
 				path: "/article/update",
@@ -57,7 +58,7 @@ const routes = [
 	},
 	{
 		path: "/book/list/:page",
-		component : BookList,
+		component: BookList,
 		routes: [
 			{
 				path: "/book/info/:id",
@@ -74,7 +75,7 @@ const routes = [
 	 */
 	{
 		path: '/website/list/:page',
-		component : WebList,
+		component: WebList,
 		routes: [
 		]
 	}
@@ -96,10 +97,10 @@ export default function RouteConfigExample() {
 function RouteWithSubRoutes(routes) {
 	let res = []
 	routes.forEach((item, index) => {
-		res.push(<Route key={Date.parse(new Date()) + index}  exact path={item.path} component={item.component} />)
+		res.push(<Route key={Date.parse(new Date()) + index} exact path={item.path} component={item.component} />)
 
-		if(item.routes){
-			res.push(RouteWithSubRoutes(item.routes)) 
+		if (item.routes) {
+			res.push(RouteWithSubRoutes(item.routes))
 		}
 	});
 

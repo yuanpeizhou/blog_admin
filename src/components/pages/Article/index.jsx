@@ -56,9 +56,13 @@ export default class ArticleList extends React.Component {
     this.loadData = this.loadData.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.insert = this.insert.bind(this)
   }
   componentDidMount() {
     this.loadData()
+  }
+  insert() {
+    this.props.history.push({ pathname: '/article/insert' })
   }
   /*加载数据*/
   loadData(isInit = true) {
@@ -111,7 +115,7 @@ export default class ArticleList extends React.Component {
     return (
       <>
         <BreadcrumbComponent path='文章管理/文章列表' />
-
+        <button onClick={this.insert}>新增</button>
         <Table
           columns={this.columns}
           dataSource={this.state.tableData}

@@ -41,6 +41,10 @@ export function getArticleList(params, callback, charset = "utf-8") {
   return httpRequest('articles', 'get', params, charset, callback)
 }
 
+export function getArticleInfo($id, callback, charset = "utf-8") {
+  return httpRequest('articles/' + $id, 'get', null, charset, callback)
+}
+
 export function getWordList(url, method = "get", params, callback, charset = "utf-8") {
   return httpRequest(url, method, params, charset, callback)
 }
