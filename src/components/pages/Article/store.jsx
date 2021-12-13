@@ -37,11 +37,12 @@ export default class ArticleStore extends React.Component {
     onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
     getBase64(img, callback) {
         const reader = new FileReader();
         reader.addEventListener('load', () => callback(reader.result));
         reader.readAsDataURL(img);
-    };
+    }
 
     beforeUpload(file) {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -54,19 +55,23 @@ export default class ArticleStore extends React.Component {
         }
         return isJpgOrPng && isLt2M;
     }
-    handleChange(info) {
+
+    handleChange = info => {
         if (info.file.status === 'uploading') {
-            this.loading = true;
+            this.setState({ loading: true });
             return;
         }
         if (info.file.status === 'done') {
             // Get this url from response in real world.
-            this.getBase64(info.file.originFileObj, imageUrl => {
-                this.imageUrl = imageUrl;
-                this.loading = false;
-            });
+            this.getBase64(info.file.originFileObj, imageUrl =>
+                this.setState({
+                    imageUrl,
+                    loading: false,
+                }),
+            );
         }
     }
+
     render() {
         return (
             <div className="form_box">
@@ -94,11 +99,11 @@ export default class ArticleStore extends React.Component {
                     // rules={[{ required: true, message: 'Please input your password!' }]}
                     >
                         <Upload
-                            name="avatar"
+                            name="cover"
                             listType="picture-card"
                             className="avatar-uploader"
                             showUploadList={false}
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="http://192.178.30.228/book_spider/public/blog/upload/img"
                             beforeUpload={this.beforeUpload}
                             onChange={this.handleChange}
                         >
