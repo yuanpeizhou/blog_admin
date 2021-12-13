@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Checkbox, Upload, message, TextArea } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-// import { getArticleInfo } from '../../../api';
+import { storeArticle } from '../../../api';
 import editor from "wangeditor"
 
 
@@ -12,6 +12,7 @@ export default class ArticleStore extends React.Component {
 
         this.state = {
             imageUrl: null,
+            coverUrl: null,
             loading: null,
             title: null,
             content: null
@@ -19,9 +20,9 @@ export default class ArticleStore extends React.Component {
 
         this.onFinish = this.onFinish.bind(this)
         this.onFinishFailed = this.onFinishFailed.bind(this)
-        this.beforeUpload = this.beforeUpload.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.getBase64 = this.getBase64.bind(this)
+        // this.beforeUpload = this.beforeUpload.bind(this)
+        // this.handleChange = this.handleChange.bind(this)
+        // this.getBase64 = this.getBase64.bind(this)
     }
 
     componentDidMount() {
@@ -32,6 +33,12 @@ export default class ArticleStore extends React.Component {
 
     onFinish = (values) => {
         console.log('Success:', values);
+
+        if (this.state.imageUrl) {
+            values.cover = this.state.imageUrl
+        }
+
+        this.saveArticle(values)
     };
 
     onFinishFailed = (errorInfo) => {
@@ -65,11 +72,24 @@ export default class ArticleStore extends React.Component {
             // Get this url from response in real world.
             this.getBase64(info.file.originFileObj, imageUrl =>
                 this.setState({
+                    // coverUrl: info.file
                     imageUrl,
                     loading: false,
                 }),
             );
         }
+    }
+
+    saveArticle(params) {
+        var _this = this
+        storeArticle(params, function (res) {
+            if (res.code != 200) {
+                message.error(res.message)
+            } else {
+                message.success(res.message)
+                _this.props.history.replace({ pathname: '/article/list' })
+            }
+        })
     }
 
     render() {
